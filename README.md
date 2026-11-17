@@ -1,4 +1,7 @@
-# P4 Model
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <img src="assets/banner-light.svg" alt="p4. Describe software as precise processes at four levels of detail. For people and LLMs.">
+</picture>
 
 **P4 Model** is a way to describe software as precise processes, at four levels of detail: from a list of processes anyone can read, down to code design.
 
