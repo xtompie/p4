@@ -20,6 +20,8 @@ You describe any change to a system (a new feature, a fix, a whole new system) a
 | 3 | **Implementation plan** | What happens inside, and where do we build it? | Steps: check stock, recalculate prices, reserve stock, save. Orders module, order tables, same approach as the Returns module. |
 | 4 | **Pseudocode** | What exactly will the code look like? | Classes, methods, arguments, tables, list of tests, no method bodies. |
 
+![One process, P-01 Place order, at the four P4 levels. Levels 1 and 2 are visible from outside the system, levels 3 and 4 are inside.](assets/levels.svg)
+
 The line between levels 2 and 3 is simple: **can you see it from outside the system?** If yes, it belongs to level 2. If it happens inside, it belongs to level 3.
 
 ---
