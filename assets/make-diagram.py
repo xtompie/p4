@@ -8,7 +8,7 @@ from fontTools import subset
 from fontTools.ttLib import TTFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BG, W, L, M, D = "#0a0907", "#f0edfe", "#cec6fa", "#9d8cf5", "#7d6fd0"
+BG, W, L, M, D = "#0a0907", "#f3f2f9", "#d8d4ec", "#b1a9d8", "#908ab5"
 TXT, DIM, LINE = "#cfc6b4", "#8a7a5c", "#3a3122"
 
 def font(path, weight):

@@ -23,10 +23,10 @@ TAGS = [["software-design", "specification", "requirements"], ["spec-driven-deve
 URL = "github.com/xtompie/p4"
 
 THEMES = {
-    "dark": dict(bg="#0a0907", w="#f0edfe", l="#cec6fa", m="#9d8cf5", d="#665b9f",
-                 h1="#f3ead8", h3="#cfc6b4", tag="#665b9f", tagtext="#cec6fa", url="#8a7a5c"),
-    "light": dict(bg=None, w="#d9d2fb", l="#a99cf0", m="#6d5bd0", d="#4a3c9e",
-                  h1="#1f1a12", h3="#4a4234", tag="#a99cf0", tagtext="#4a3c9e", url="#7a6440"),
+    "dark": dict(bg="#0a0907", w="#f3f2f9", l="#d8d4ec", m="#b1a9d8", d="#736e8c",
+                 h1="#f3ead8", h3="#cfc6b4", tag="#736e8c", tagtext="#d8d4ec", url="#8a7a5c"),
+    "light": dict(bg=None, w="#e0ddf0", l="#b9b3d9", m="#837bb0", d="#5d5783",
+                  h1="#1f1a12", h3="#4a4234", tag="#b9b3d9", tagtext="#5d5783", url="#7a6440"),
 }
 
 # 5x7 pixel letters; lowercase starts at row 2 and nothing goes below row 6.
