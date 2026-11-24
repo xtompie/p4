@@ -32,24 +32,21 @@ def logo(x, y, u):
 def chamfer(x, y, w, h, c=14): return f"M{x+c} {y} H{x+w} V{y+h-c} L{x+w-c} {y+h} H{x} V{y+c} Z"
 
 LEVELS = [
-    ("1", "PROCESSES", "What are the processes?", W, [
+    ("P1", "PROCESSES", "Which processes are there?", W, [
         ("t", "P-01 Place order: the customer submits an order from the cart.")]),
-    ("2", "CONTRACTS", "What is visible from the outside?", L, [
-        ("t", "Who: customer. Start: submits the order form."),
+    ("P2", "CONTRACTS", "What goes in and what comes out?", L, [
         ("t", "Input: products with quantities, delivery address, email."),
-        ("t", "Result: the order is accepted, the customer sees the order number."),
-        ("t", "Output: confirmation email. State: none → New."),
-        ("t", "A product ran out → no order is created.")]),
-    ("3", "IMPLEMENTATION PLAN", "What happens inside, and where?", M, [
+        ("t", "Output: the customer sees the order number."),
+        ("t", "Effects: the order is created, a confirmation email is sent."),
+        ("t", "Errors: a product ran out → no order is created.")]),
+    ("P3", "IMPLEMENTATION", "What happens inside?", M, [
         ("t", "Steps: check stock → recalculate prices → reserve stock → save."),
         ("t", "Data: orders, order items, stock reservations."),
-        ("t", "Place: Orders module, POST /orders, existing stock and pricing services."),
-        ("t", "Pattern: creating a return in the Returns module.")]),
-    ("4", "PSEUDOCODE", "What exactly will the code look like?", D, [
+        ("t", "Place: Orders module, same approach as creating a return.")]),
+    ("P4", "CODE", "What does the code look like?", D, [
         ("c", "PlaceOrderCommand { items, shipping, email, formToken }"),
         ("c", "PlaceOrderHandler::handle(PlaceOrderCommand): OrderNumber"),
-        ("c", "orders(id, number, email, status, total, form_token)"),
-        ("t", "Tests: valid order, out of stock saves nothing, same token gives same order.")]),
+        ("c", "orders(id, number, email, status, total, form_token)")]),
 ]
 
 def build(css):
@@ -60,8 +57,8 @@ def build(css):
         h = max(84, 40 + len(lines) * 30)
         o += f'<path d="{chamfer(x0, y, Wd-2*x0, h)}" fill="none" stroke="{col}" stroke-width="1.6"/>'
         o += f'<text x="{x0+24}" y="{y+36}" class="num" fill="{col}">{n}</text>'
-        o += f'<text x="{x0+60}" y="{y+34}" class="lvl" fill="{col}">{name}</text>'
-        o += f'<text x="{x0+60}" y="{y+58}" class="q">{esc(q)}</text>'
+        o += f'<text x="{x0+84}" y="{y+34}" class="lvl" fill="{col}">{name}</text>'
+        o += f'<text x="{x0+84}" y="{y+58}" class="q">{esc(q)}</text>'
         for k, (kind, s) in enumerate(lines):
             o += f'<text x="{x0+lab+20}" y="{y+34+k*30}" class="{"code" if kind == "c" else "body"}">{esc(s)}</text>'
         y += h + 22
@@ -79,7 +76,7 @@ def build(css):
 css = font(sys.argv[1], 400) + font(sys.argv[2], 700) + f"""
 text {{ font-family: JBM, ui-monospace, monospace; }}
 .title {{ font-size: 26px; fill: #f3ead8; }}
-.num {{ font-size: 30px; font-weight: 700; }}
+.num {{ font-size: 24px; font-weight: 700; }}
 .lvl {{ font-size: 15px; letter-spacing: 2px; font-weight: 700; }}
 .q {{ font-size: 14px; fill: {DIM}; }}
 .body {{ font-size: 17px; fill: {TXT}; }}
