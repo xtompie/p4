@@ -59,12 +59,30 @@ Each process gets an ID and a name, e.g. `P-01 Place order`. The ID never change
 
 ### Rules
 
-1. **One document that grows downward.** Level 1 lists all processes. Level 2 repeats all of them and describes each one in more detail. Levels 3 and 4 do the same.
+1. **One document that grows downward.** Level 1 lists the processes in scope. Level 2 repeats them and describes each one in more detail. Levels 3 and 4 do the same.
 2. **A lower level never changes a higher one.** If something above needs to change, go back to that level, fix it, agree on the change, and come down again.
 3. **Every level stands on its own.** Stop where the next level is no longer needed. Level 1 alone is a complete use of P4.
 4. **Precision depends on the need.** A contract can say "products, address, email" or be an exact API description with fields and types. A simple process may have a two-line level 3.
 5. **Levels can be added or skipped.** Four levels are the default. A large or distributed system may need an extra level (see [Extra levels](#extra-levels)).
 6. **If you don't know how, you don't write code.** Level 3 points to an existing place in the system that the new code will follow. Open questions must be resolved before coding starts.
+
+7. **The forms are examples, not a format.** What matters is that each level answers its question. The templates below show one way to write it; use any clear wording.
+
+### Changing existing processes
+
+Most work changes a system that already exists. Then the document covers only the processes the change touches, and on each level describes only what changes.
+
+- Level 1 lists the affected processes and says in one line what changes in each.
+- Levels 2 to 4 describe the change: what is different, and what must stay the same. Parts of a process that do not change are not repeated.
+- A new process in the same change is described in full, like any other.
+
+```markdown
+## Level 1: Processes
+
+- P-01 Place order: also accepts a discount code.
+- P-02 Confirm order: no change in behaviour; the confirmation email shows the discount.
+- P-07 Apply discount code (new): the customer checks a code before ordering.
+```
 
 ### Who uses which level
 
@@ -84,7 +102,9 @@ Typical uses:
 
 **Question:** which processes are there?
 
-Name each process. When the name alone does not say what happens, add a short note: who does what. "Account activation" may be clear on its own; "Reconciliation" is not.
+Name each process so it can be told apart from the other processes in the system. The name is often enough. When it is not, add one short note: who does what. "Account activation" may be clear on its own; "Reconciliation" is not.
+
+Level 1 is not the contract. Inputs, outputs, emails, rules and errors belong to level 2, not to the note.
 
 ```markdown
 ## Level 1: Processes
@@ -442,14 +462,16 @@ When asked to describe something "using the P4 Model", "up to level N" or "up to
 
 1. Write a single document with the sections `## Level 1: Processes`, `## Level 2: Contracts`, `## Level 3: Implementation`, `## Level 4: Code`, only up to the requested level.
 2. Always start from level 1, even when asked for a deeper level. Each level is derived from the one above.
-3. Split into processes using the "is it one process?" check. Give them IDs `P-01`, `P-02`… and never change them between levels. Repeat all processes on every level.
-4. Use the short form by default. Write only what carries information. Never fill a field just because a template has it; leave out empty and obvious items.
-5. Use the extended templates only when asked, or when a process is large or risky (payments, permissions, data loss, a public API). Say that you used them and why.
-6. On levels 1–2, describe only what is visible from outside the system. Do not use technical vocabulary unless an API contract was requested.
-7. Do not write method bodies unless code was asked for.
-8. On level 3, read the existing code and point to a real place to follow. If you have no access to the code, say so under "Open questions".
-9. Do not invent anything. Put missing information under "Open questions", or ask before writing.
-10. If a lower level shows that a higher one is wrong or incomplete, do not fix it silently. Stop, describe the problem, and propose a change to the higher level.
+3. Split into processes using the "is it one process?" check. Give them IDs `P-01`, `P-02`… and never change them between levels. Repeat the processes in scope on every level.
+4. On level 1, give each process a short name and at most one short note that tells it apart from the other processes. Keep inputs, outputs, effects and rules for level 2.
+5. When the request changes existing behaviour, cover only the affected processes and describe only what changes, plus what must stay the same. Do not restate unchanged parts.
+6. Use the short form by default. The forms in this README are examples, not a required format. Write only what carries information. Never fill a field just because a template has it; leave out empty and obvious items.
+7. Use the extended templates only when asked, or when a process is large or risky (payments, permissions, data loss, a public API). Say that you used them and why.
+8. On levels 1–2, describe only what is visible from outside the system. Do not use technical vocabulary unless an API contract was requested.
+9. Do not write method bodies unless code was asked for.
+10. On level 3, read the existing code and point to a real place to follow. If you have no access to the code, say so under "Open questions".
+11. Do not invent anything. Put missing information under "Open questions", or ask before writing.
+12. If a lower level shows that a higher one is wrong or incomplete, do not fix it silently. Stop, describe the problem, and propose a change to the higher level.
 
 ---
 
