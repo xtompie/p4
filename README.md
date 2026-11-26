@@ -15,14 +15,14 @@ You describe any change to a system (a new feature, a fix, a whole new system) a
 
 | # | Level | Question | What belongs there |
 |---|---|---|---|
-| P1 | **Processes** | Which processes are there? | A name for each process, with a short note when the name alone is not clear. |
-| P2 | **Contracts** | What goes in and what comes out? | Input, output, and the effects visible from outside, such as an email sent. For an API: request, response and the errors that are part of the contract. |
-| P3 | **Implementation** | What happens inside? | What the system does that is not visible from outside: steps, data, where in the code. |
-| P4 | **Code** | What does the code look like? | Code or pseudocode, as detailed as needed. |
+| L1 | **Processes** | Which processes are there? | A name for each process, with a short note when the name alone is not clear. |
+| L2 | **Contracts** | What goes in and what comes out? | Input, output, and the effects visible from outside, such as an email sent. For an API: request, response and the errors that are part of the contract. |
+| L3 | **Implementation** | What happens inside? | What the system does that is not visible from outside: steps, data, where in the code. |
+| L4 | **Code** | What does the code look like? | Code or pseudocode, as detailed as needed. |
 
-![One process, P-01 Place order, at the four P4 levels. Levels 1 and 2 are visible from outside the system, levels 3 and 4 are inside.](assets/levels.svg)
+![One process, P01 Place order, at the four P4 levels. Levels 1 and 2 are visible from outside the system, levels 3 and 4 are inside.](assets/levels.svg)
 
-The levels are also called **P1 to P4**: "up to P2" means levels 1 and 2. The whole method is the P4 Model; when that is ambiguous, say "level P4" for the code level.
+The levels are also called **L1 to L4**: "up to L2" means levels 1 and 2. On every level a process is marked with both the level and its ID: **L3P01** is process P01 on level 3. Every heading then says where you are, without scrolling to the section.
 
 The line between levels 2 and 3 is simple: **can you see it from outside the system?** If yes, it belongs to level 2. If it happens inside, it belongs to level 3.
 
@@ -55,7 +55,7 @@ Signs that a new process starts:
 - there is a gap in time and the system waits for someone or something;
 - a different person or system starts it.
 
-Each process gets an ID and a name, e.g. `P-01 Place order`. The ID never changes between levels.
+Each process gets an ID and a name, e.g. `P01 Place order`. The ID never changes between levels. On each level the process is written with the level in front: `L1P01`, `L2P01`, `L3P01`, `L4P01`.
 
 ### Rules
 
@@ -79,9 +79,9 @@ Most work changes a system that already exists. Then the document covers only th
 ```markdown
 ## Level 1: Processes
 
-- P-01 Place order: also accepts a discount code.
-- P-02 Confirm order: no change in behaviour; the confirmation email shows the discount.
-- P-07 Apply discount code (new): the customer checks a code before ordering.
+- L1P01 Place order: also accepts a discount code.
+- L1P02 Confirm order: no change in behaviour; the confirmation email shows the discount.
+- L1P07 Apply discount code (new): the customer checks a code before ordering.
 ```
 
 ### Who uses which level
@@ -109,8 +109,8 @@ Level 1 is not the contract. Inputs, outputs, emails, rules and errors belong to
 ```markdown
 ## Level 1: Processes
 
-- P-01 Registration: a visitor submits the sign-up form.
-- P-02 Account activation
+- L1P01 Registration: a visitor submits the sign-up form.
+- L1P02 Account activation
 ```
 
 Check: every interaction with the system is a separate process, and each one passes the "is it one process?" check.
@@ -132,7 +132,7 @@ Describe input and output in words or exactly (fields, types, sample data). Choo
 ```markdown
 ## Level 2: Contracts
 
-### P-01 Registration
+### L2P01 Registration
 - Input: email, password, name
 - Output: the visitor sees "Check your inbox"
 - Effects: an inactive account is created; an activation email is sent
@@ -162,7 +162,7 @@ Describe what the system does that is not visible from outside, in as much detai
 ```markdown
 ## Level 3: Implementation
 
-### P-01 Registration
+### L3P01 Registration
 - Steps: validate → create the inactive user → create the activation link → queue the email
 - Place: Accounts module, same approach as inviting a user in the Team module
 ```
@@ -187,7 +187,7 @@ Code or pseudocode, at whatever level of detail is needed: from signatures and t
 ```markdown
 ## Level 4: Code
 
-### P-01 Registration
+### L4P01 Registration
 - `RegisterHandler::handle(RegisterCommand): void`
 - `users(id, email unique, password_hash, name, status, created_at)`
 ```
@@ -204,7 +204,7 @@ Code or pseudocode, at whatever level of detail is needed: from signatures and t
 
 Examples of levels you can add:
 
-- **Map** (above Processes): groups of processes, e.g. "Creating an account = P-01 Registration + P-02 Account activation". Useful when there are many processes.
+- **Map** (above Processes): groups of processes, e.g. "Creating an account = P01 Registration + P02 Account activation". Useful when there are many processes.
 - **Services** (between Implementation and Code): which service or system handles which step, and how they talk to each other. Useful in distributed systems.
 
 An added level follows the same rules: it repeats all processes and never changes the levels above it.
@@ -217,68 +217,68 @@ The default, short form. What people call "creating an account" is four processe
 
 ### Level 1: Processes
 
-- P-01 Registration: a visitor submits the sign-up form.
-- P-02 Account activation: the user clicks the activation link from the email.
-- P-03 Resend activation link: the user asks for a new activation link.
-- P-04 Remove unactivated accounts: every night the system removes accounts not activated within 7 days.
+- L1P01 Registration: a visitor submits the sign-up form.
+- L1P02 Account activation: the user clicks the activation link from the email.
+- L1P03 Resend activation link: the user asks for a new activation link.
+- L1P04 Remove unactivated accounts: every night the system removes accounts not activated within 7 days.
 
 ### Level 2: Contracts
 
-#### P-01 Registration
+#### L2P01 Registration
 - Input: email, password (at least 10 characters), name, terms accepted
 - Output: the visitor sees "Check your inbox"
 - Effects: an inactive account is created; an activation email with a link valid for 24 hours is sent
 - Errors: invalid data → nothing is created, the form shows each wrong field; email already registered → the same "Check your inbox", and that address gets a "someone tried to register" email
 
-#### P-02 Account activation
+#### L2P02 Account activation
 - Input: the code from the link
 - Output: "Account activated", the user can log in
 - Effects: the account becomes active; the link stops working
-- Errors: expired link → a message with "Send a new link" (P-03); unknown or replaced link → "This link is not valid"
+- Errors: expired link → a message with "Send a new link" (P03); unknown or replaced link → "This link is not valid"
 
-#### P-03 Resend activation link
+#### L2P03 Resend activation link
 - Input: email
 - Output: "If an inactive account exists for this address, we have sent a new link"
 - Effects: a new activation email; all previous links stop working
 - Errors: more than 3 requests per hour for one address → "Too many attempts, try again later"
 
-#### P-04 Remove unactivated accounts
+#### L2P04 Remove unactivated accounts
 - Input: none (runs every night at 03:00)
 - Effects: inactive accounts older than 7 days are removed; active accounts are never removed
 
 ### Level 3: Implementation
 
-#### P-01 Registration
+#### L3P01 Registration
 - Steps: validate → normalise the email → if it exists, queue the "someone tried" email and stop → create the inactive user → create the activation link → queue the activation email
 - Data: users (email unique), activation links (only a fingerprint and expiry are stored), outgoing emails
 - Place: Accounts module, same approach as inviting a user in the Team module
 
-#### P-02 Account activation
+#### L3P02 Account activation
 - Steps: find the link by fingerprint → check it is unused and not expired → activate the account and mark the link as used, in one transaction
 - Place: Accounts module, same approach as password reset
 
-#### P-03 Resend activation link
+#### L3P03 Resend activation link
 - Steps: find the inactive account → cancel its links → create a new link → queue the email; requests are counted per address per hour
-- Place: Accounts module, reuses link creation from P-01
+- Place: Accounts module, reuses link creation from P01
 
-#### P-04 Remove unactivated accounts
+#### L3P04 Remove unactivated accounts
 - Steps: select inactive accounts older than 7 days in batches → remove each one with its links; a failure is logged and retried the next night
 - Place: Accounts module, scheduled job like the nightly cleanup of expired sessions
 
 ### Level 4: Code
 
-#### P-01 Registration
+#### L4P01 Registration
 - `RegisterCommand { email: string, password: string, name: string, termsAccepted: bool }`
 - `RegisterHandler::handle(RegisterCommand): void`
 - `activation_links(id, user_id, fingerprint, expires_at, used_at, cancelled_at)`
 
-#### P-02 Account activation
+#### L4P02 Account activation
 - `ActivateAccountHandler::handle(ActivateAccountCommand { code: string }): void`
 
-#### P-03 Resend activation link
+#### L4P03 Resend activation link
 - `ResendActivationLinkHandler::handle(ResendActivationLinkCommand { email: string }): void`
 
-#### P-04 Remove unactivated accounts
+#### L4P04 Remove unactivated accounts
 - `RemoveUnactivatedAccountsJob::run(now: datetime): int`
 
 ---
@@ -289,13 +289,13 @@ The same idea with the extended templates. Use this form for large, risky or cro
 
 ### Level 1: Processes
 
-- P-01 Place order: the customer submits an order from the cart.
-- P-02 Confirm order: the admin confirms a new order.
-- P-03 Export orders: the admin downloads orders from a chosen period as a CSV file.
+- L1P01 Place order: the customer submits an order from the cart.
+- L1P02 Confirm order: the admin confirms a new order.
+- L1P03 Export orders: the admin downloads orders from a chosen period as a CSV file.
 
 ### Level 2: Contracts
 
-#### P-01 Place order
+#### L2P01 Place order
 - Who: customer
 - Start: submits the order form
 - Conditions: the cart is not empty
@@ -329,7 +329,7 @@ POST /orders
 { "error": "out_of_stock", "sku": "A-100" }
 ```
 
-#### P-02 Confirm order
+#### L2P02 Confirm order
 - Who: admin
 - Start: clicks "Confirm" on an order
 - Conditions: admin is logged in, the order is in state "New"
@@ -343,7 +343,7 @@ POST /orders
   - the email failed to send → the order stays confirmed, the email arrives later
 - Always true: an order is confirmed at most once
 
-#### P-03 Export orders
+#### L2P03 Export orders
 - Who: admin
 - Start: clicks "Export" and picks a date range
 - Conditions: admin is logged in
@@ -359,7 +359,7 @@ POST /orders
 
 ### Level 3: Implementation
 
-#### P-01 Place order
+#### L3P01 Place order
 - Steps: check stock → recalculate prices → reserve stock → save the order → save the email to be sent
 - Data: orders and order items tables, reservations in the stock table, table of emails to be sent
 - Safeguards:
@@ -371,18 +371,18 @@ POST /orders
 - Extra steps: database changes (new tables), email template
 - Open questions: none
 
-#### P-02 Confirm order
+#### L3P02 Confirm order
 - Steps: check state → change state → save the email to be sent
 - Data: state change in the orders table, table of emails to be sent
 - Safeguards:
   - already confirmed: the state changes only if the order is "New", checked at the moment of saving, so two clicks cannot confirm twice
-  - email: same as P-01
+  - email: same as P01
 - Place in code: Orders module; new: "confirm order" handler, button in the admin panel
 - Pattern: accepting a return in the Returns module
 - Extra steps: email template, new permission for confirming orders
 - Open questions: none
 
-#### P-03 Export orders
+#### L3P03 Export orders
 - Steps: check the range → read orders in batches → write rows to the file
 - Data: read-only access to the orders table
 - Safeguards:
@@ -395,18 +395,18 @@ POST /orders
 
 ### Level 4: Code
 
-#### P-01 Place order
+#### L4P01 Place order
 - Structures: `PlaceOrderCommand { items: OrderItem[], shipping: Address, email: string, formToken: string }`
 - Classes and methods: `PlaceOrderHandler::handle(PlaceOrderCommand): OrderNumber`
 - Tables: `orders(id, number, email, status, total, form_token, created_at)`, `order_items(order_id, sku, qty, price)`
 - Tests: valid order; out of stock saves nothing; resubmit with the same token returns the same order; form price ignored; email saved to be sent
 
-#### P-02 Confirm order
+#### L4P02 Confirm order
 - Structures: `ConfirmOrderCommand { orderNumber: string }`
 - Classes and methods: `ConfirmOrderHandler::handle(ConfirmOrderCommand): void`
 - Tests: confirm from "New"; attempt from "Confirmed"; attempt from "Cancelled"; missing permission; email saved to be sent
 
-#### P-03 Export orders
+#### L4P03 Export orders
 - Structures: `ExportOrdersQuery { from: date, to: date }`
 - Classes and methods: `ExportOrdersHandler::handle(ExportOrdersQuery): CsvFile`
 - Tests: export with data; empty range gives only the header; range over 12 months rejected; missing permission
@@ -452,17 +452,17 @@ If they are visible from outside (response time, limits, permissions, file size)
 C4 describes the structure of a system (context, containers, components, code). P4 describes its behaviour, as processes. The place in code on level 3 can refer to C4 containers and components.
 
 **How do I use P4 with an LLM?**
-Give it the link to this README and ask, for example: "Describe the order checkout using the P4 Model, up to P2" or "Here is our P4 document up to level 2. Read the codebase and write level 3."
+Give it the link to this README and ask, for example: "Describe the order checkout using the P4 Model, up to L2" or "Here is our P4 document up to level 2. Read the codebase and write level 3."
 
 ---
 
 ## For LLMs
 
-When asked to describe something "using the P4 Model", "up to level N" or "up to PN" (P1 to P4 are levels 1 to 4):
+When asked to describe something "using the P4 Model", "up to level N" or "up to LN" (L1 to L4 are levels 1 to 4):
 
 1. Write a single document with the sections `## Level 1: Processes`, `## Level 2: Contracts`, `## Level 3: Implementation`, `## Level 4: Code`, only up to the requested level.
 2. Always start from level 1, even when asked for a deeper level. Each level is derived from the one above.
-3. Split into processes using the "is it one process?" check. Give them IDs `P-01`, `P-02`… and never change them between levels. Repeat the processes in scope on every level.
+3. Split into processes using the "is it one process?" check. Give them IDs `P01`, `P02`… and never change them between levels. On level N, mark every process as `LN` plus its ID, in headings and list items: `L3P01 Place order`. Repeat the processes in scope on every level.
 4. On level 1, give each process a short name and at most one short note that tells it apart from the other processes. Keep inputs, outputs, effects and rules for level 2.
 5. When the request changes existing behaviour, cover only the affected processes and describe only what changes, plus what must stay the same. Do not restate unchanged parts.
 6. Use the short form by default. The forms in this README are examples, not a required format. Write only what carries information. Never fill a field just because a template has it; leave out empty and obvious items.

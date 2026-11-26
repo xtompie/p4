@@ -32,18 +32,18 @@ def logo(x, y, u):
 def chamfer(x, y, w, h, c=14): return f"M{x+c} {y} H{x+w} V{y+h-c} L{x+w-c} {y+h} H{x} V{y+c} Z"
 
 LEVELS = [
-    ("P1", "PROCESSES", "Which processes are there?", W, [
-        ("t", "P-01 Place order: the customer submits an order from the cart.")]),
-    ("P2", "CONTRACTS", "What goes in and what comes out?", L, [
+    ("L1", "PROCESSES", "Which processes are there?", W, [
+        ("t", "L1P01 Place order: the customer submits an order from the cart.")]),
+    ("L2", "CONTRACTS", "What goes in and what comes out?", L, [
         ("t", "Input: products with quantities, delivery address, email."),
         ("t", "Output: the customer sees the order number."),
         ("t", "Effects: the order is created, a confirmation email is sent."),
         ("t", "Errors: a product ran out → no order is created.")]),
-    ("P3", "IMPLEMENTATION", "What happens inside?", M, [
+    ("L3", "IMPLEMENTATION", "What happens inside?", M, [
         ("t", "Steps: check stock → recalculate prices → reserve stock → save."),
         ("t", "Data: orders, order items, stock reservations."),
         ("t", "Place: Orders module, same approach as creating a return.")]),
-    ("P4", "CODE", "What does the code look like?", D, [
+    ("L4", "CODE", "What does the code look like?", D, [
         ("c", "PlaceOrderCommand { items, shipping, email, formToken }"),
         ("c", "PlaceOrderHandler::handle(PlaceOrderCommand): OrderNumber"),
         ("c", "orders(id, number, email, status, total, form_token)")]),
@@ -70,7 +70,7 @@ def build(css):
             y += 58
     H = y + 10
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {Wd} {H}" width="{Wd}" height="{H}" role="img" '
-            f'aria-label="One process, P-01 Place order, described at the four P4 levels: processes, contracts, implementation plan, pseudocode. Levels 1 and 2 are visible from outside the system, levels 3 and 4 are inside.">'
+            f'aria-label="One process, P01 Place order, described at the four P4 levels: processes, contracts, implementation plan, pseudocode. Levels 1 and 2 are visible from outside the system, levels 3 and 4 are inside.">'
             f'<style>{css}</style><rect width="{Wd}" height="{H}" fill="{BG}"/>{o}</svg>')
 
 css = font(sys.argv[1], 400) + font(sys.argv[2], 700) + f"""
